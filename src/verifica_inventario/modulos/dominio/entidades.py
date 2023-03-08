@@ -25,6 +25,7 @@ class Bodega(Entidad):
     ubicacion: Ubicacion = None
 
 
+@dataclass
 class CentroDistribucion(Bodega):
     nombre_centro_distribucion: NombreCentroDistribucion = None
 
@@ -57,9 +58,9 @@ class Orden(AgregacionRaiz):
         #     OrdenRegistrada(id=orden.id, id_orden=orden.id_orden, usuario=orden.usuario, estado=orden.estado))
 
     def verificar_inventario(self, inventario_bodega: list[InventarioBodega]):
-        self.items_bodegas = list(UbicacionItem)
-        self.items_centros = list(UbicacionItem)
-        self.items_pendientes = list(UbicacionItem)
+        self.items_bodegas = list()
+        self.items_centros = list()
+        self.items_pendientes = list()
         for inventario in inventario_bodega:
             for producto in inventario.productos:
                 for item in self.items:
@@ -75,5 +76,5 @@ class Orden(AgregacionRaiz):
 
         self.agregar_evento(
             OrdenVerificada(id=self.id, id_orden=self.id_orden, usuario=self.usuario,
-                            direccion_usuario=self.direccion_usuario, estado=self.estado,
+                            direccion_usuario=self.direccion_usuario,
                             items_bodegas=self.items_bodegas, items_centros=self.items_centros))

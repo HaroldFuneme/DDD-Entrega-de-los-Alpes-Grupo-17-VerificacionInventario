@@ -72,7 +72,7 @@ class Ubicacion(ObjetoValor):
 
 
 @dataclass(frozen=True)
-class NombreCentroDistribucion():
+class NombreCentroDistribucion(ObjetoValor):
     nombre: str
 
 

@@ -21,9 +21,19 @@ class MapeadorOrdenCreadaDTOJson(AppMap):
     def dto_a_externo(self, dto: OrdenCreadaDTO) -> any:
         return dto.__dict__
 
-    def _procesar_items(self, item):
-        item = ItemDTO(descripcion=item)
-        return item
+class MapeadorEventoOrdenCreadaDTOJson(AppMap):
+
+    def externo_a_dto(self, evento: any) -> OrdenCreadaDTO:
+        orden_creada_dto = OrdenCreadaDTO(evento.eventId,
+                                          evento.payload.ordenId,
+                                          evento.payload.user,
+                                          evento.payload.user_address)
+        for item in evento.payload.items:
+            orden_creada_dto.items.append(item)
+        return orden_creada_dto
+
+    def dto_a_externo(self, dto: OrdenCreadaDTO) -> any:
+        return dto.__dict__
 
 
 class MapeadorOrdenCreada(Mapeador):
@@ -40,17 +50,13 @@ class MapeadorOrdenCreada(Mapeador):
         return OrdenCreadaDTO(id_orden=_id_orden, usuario=usuario, direccion_usuario=direccion_usuario, items=items)
 
     def dto_a_entidad(self, dto: OrdenCreadaDTO) -> Orden:
-        orden_creada = Orden()
-        orden_creada.id = dto.event_id
-        orden_creada.id_orden = dto.id_orden
-        orden_creada.usuario = dto.usuario
-        orden_creada.direccion_usuario = dto.direccion_usuario
+        orden_creada = Orden(id=dto.event_id,id_orden=dto.id_orden, usuario=dto.usuario, direccion_usuario=dto.direccion_usuario)
         orden_creada.items = list()
 
         items_dto: list[ItemDTO] = dto.items
 
         for item in items_dto:
-            item_entidad: Item(descripcion=item)
+            item_entidad = Item(descripcion=item)
             orden_creada.items.append(item_entidad)
 
         return orden_creada

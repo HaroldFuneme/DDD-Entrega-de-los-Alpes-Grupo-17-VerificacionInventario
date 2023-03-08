@@ -25,30 +25,28 @@ class AgregarOrdenCreada(Comando):
         self.id_orden = orden_creada_dto.id_orden
         self.usuario = orden_creada_dto.usuario
         self.direccion_usuario = orden_creada_dto.direccion_usuario
-        self.items = list()
-        self.items.append(orden_creada_dto.items)
 
 
 def obtener_productos():
-    productos = list(Producto)
+    productos = list()
     for i in range(4):
-        producto = Producto(descripcion=Descripcion(descripcion='item' + i), tipo_producto=TipoProducto.BIENES_CONSUMO)
+        producto = Producto(descripcion=Descripcion(descripcion=f'item{i}'), tipo_producto=TipoProducto.BIENES_CONSUMO)
         productos.append(producto)
     return productos
 
 
 def obtener_inventario():
-    inventario_eda = list(InventarioBodega)
+    inventario_eda = list()
     for i in range(3):
-        bodega = Bodega(nombre_bodega='Bodega ' + 1,
-                        direccion=Direccion(direccion='Calle ' + i + ' # ' + i + ' - ' + i))
+        bodega = Bodega(nombre_bodega=f'Bodega {i}',
+                        direccion=Direccion(direccion=f'Calle {i} # {i} - {i}'))
         inventario_bodega = InventarioBodega(bodega=bodega, productos=obtener_productos())
         inventario_eda.append(inventario_bodega)
 
     for i in range(2):
-        centro_distribucion = CentroDistribucion(
-            nombre_centro_distribucion=NombreCentroDistribucion('Centro de Dist ' + 1),
-            direccion=Direccion(direccion='Carrera ' + i + ' # ' + i + ' - ' + i))
+        nombre_centro_dist = NombreCentroDistribucion(nombre=f'Centro de Distribucion {i}')
+        centro_distribucion = CentroDistribucion(nombre_centro_distribucion=nombre_centro_dist,
+            direccion=Direccion(direccion=f'Carrera {i} # {i} - {i}'))
         inventario_centro_dist = InventarioBodega(bodega=centro_distribucion, productos=obtener_productos())
         inventario_eda.append(inventario_centro_dist)
 
