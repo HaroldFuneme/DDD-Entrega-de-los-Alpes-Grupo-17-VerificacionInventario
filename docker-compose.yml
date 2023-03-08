@@ -120,16 +120,18 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   # Servicio de Verificación de Inventario
-  cliente:
-    container_name: cliente
-    hostname: cliente
-    image: eda/cliente
+  verifica-inventario:
+    container_name: verifica-inventario
+    hostname: verifica-inventario
+    image: eda/verifica-inventario
     profiles: [ "eda" ]
     depends_on:
       - broker
+      - db
     environment:
-      - BROKER_HOST=broker
+      - AEROALPES_ADDRESS=verifica-inventario
+      - PULSAR_ADDRESS=broker
     networks:
       - pulsar
     ports:
-      - "8000:8000"
+      - "5000:5000"
