@@ -94,11 +94,6 @@ Para poder ver que los cambios fueron efectivos ejecute el siguiente comando:
 
 **Nota**: Esto nos dejará con una retención infinita. Sin embargo, usted puede cambiar la propiedad de `size` para poder usar [Tiered Storage](https://pulsar.apache.org/docs/2.11.x/concepts-tiered-storage/)
 
-### Instrucciones oficiales
-
-Para seguir la guía oficial de instalación y uso de Debezium en Apache Pulsar puede usar el siguiente [link](https://pulsar.apache.org/docs/2.10.x/io-cdc-debezium/)
-
-
 ## Docker-compose
 
 Para desplegar toda la arquitectura en un solo comando, usamos `docker-compose`. Para ello, desde el directorio principal, ejecute el siguiente comando:
@@ -121,5 +116,5 @@ docker-compose up -d
 
 ### Correr docker-compose usando profiles
 ```bash
-docker-compose --profile <pulsar|aeroalpes|ui|notificacion> up
+docker-compose --profile <pulsar|db> up
 ```
