@@ -5,10 +5,8 @@ EXPOSE 5000/tcp
 COPY requirements.txt ./
 RUN pip install --upgrade --no-cache-dir pip setuptools wheel
 RUN pip install --no-cache-dir wheel
-RUN pip install --no-cache-dir -r cliente-requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-WORKDIR "/src"
-
-CMD [ "uvicorn", "verifica_inventario.main:app", "--host", "localhost", "--port", "8000", "--reload"]
+CMD [ "flask", "--app", "./src/verifica_inventario/api", "run", "--host=0.0.0.0"]
