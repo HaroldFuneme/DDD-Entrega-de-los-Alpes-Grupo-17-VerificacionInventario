@@ -3,7 +3,7 @@
 En este archivo usted encontrará las entidades del dominio de verificación de inventario
 
 """
-
+from __future__ import annotations
 from dataclasses import dataclass, field
 
 from verifica_inventario.seedwork.dominio.entidades import Entidad, AgregacionRaiz

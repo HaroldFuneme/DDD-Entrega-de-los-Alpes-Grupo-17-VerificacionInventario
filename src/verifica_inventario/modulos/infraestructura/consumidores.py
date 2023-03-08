@@ -24,7 +24,7 @@ def suscribirse_a_eventos(app=None):
 
         while True:
             mensaje = consumidor.receive()
-            datos = mensaje.value().data
+            datos = mensaje.value()
             print(f'Evento recibido: {datos}')
             json_dict = json.dumps(mensaje.value())
             # TODO Identificar el tipo de CRUD del evento: Creacion, actualización o eliminación.

@@ -10,7 +10,7 @@ El repositorio en su raíz está estructurado de la siguiente forma::
 - **README.md:** El archivo que está leyendo :)
 - **requirements.txt:** Archivo con los requerimientos para el correcto funcionamiento del proyecto (librerias Python)
 
-## AeroAlpes
+## EDA
 ### Ejecutar Base de datos
 Desde el directorio principal ejecute el siguiente comando.
 
@@ -31,7 +31,7 @@ flask --app src/verifica_inventario/api run
 Siempre puede ejecutarlo en modo DEBUG:
 
 ```bash
-flask --app ssrc/verifica_inventario/api --debug run
+flask --app src/verifica_inventario/api --debug run
 ```
 
 ### Ejecutar pruebas

@@ -14,6 +14,7 @@ PyMySQL==1.0.2
 PyMySQL[rsa]==1.0.2
 pluggy==1.0.0
 pulsar-client==3.0.0
+pulsar-client[avro]==3.0.0
 py==1.11.0
 PyDispatcher==2.0.7
 pyparsing==3.0.9

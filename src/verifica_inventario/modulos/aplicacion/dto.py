@@ -14,4 +14,4 @@ class OrdenCreadaDTO(DTO):
     id_orden: str = field(default_factory=str)
     usuario: str = field(default_factory=str)
     direccion_usuario: str = field(default_factory=str)
-    items: list[ItemDTO] = field(default_factory=list)
+    items: list[str] = field(default_factory=list[str])

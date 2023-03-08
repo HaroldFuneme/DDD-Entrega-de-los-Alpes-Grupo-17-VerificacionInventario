@@ -15,7 +15,7 @@ class MapeadorOrdenCreadaDTOJson(AppMap):
                                           externo.get(PAYLOAD).get('user'),
                                           externo.get(PAYLOAD).get('user_address'))
         for item in externo.get(PAYLOAD).get('items', list()):
-            orden_creada_dto.itinerarios.append(self._procesar_items(item))
+            orden_creada_dto.items.append(item)
         return orden_creada_dto
 
     def dto_a_externo(self, dto: OrdenCreadaDTO) -> any:

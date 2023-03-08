@@ -14,7 +14,7 @@ class OrdenCreada(Record):
     ordenId = String()
     user = String()
     user_address = String()
-    items = Array()
+    items = Array(String())
 
 
 class OrdenValidada(Record):
@@ -37,8 +37,8 @@ class InventarioVerificadoPayload(Record):
     ordenId = String()
     user = String()
     user_address = String()
-    items_bodegas = Array()
-    items_centros = Array()
+    items_bodegas = Array(String())
+    items_centros = Array(String())
 
 
 class InventarioVerificado(EventoIntegracion):
