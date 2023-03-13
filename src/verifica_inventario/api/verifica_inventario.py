@@ -12,7 +12,7 @@ from verifica_inventario.seedwork.dominio.excepciones import ExcepcionDominio
 bp = api.crear_blueprint('verifica-inventario', '/verifica-inventario')
 
 
-@bp.route('/crear-orden', methods=('POST',))
+@bp.route('/verificar-orden', methods=('POST',))
 def reservar_usando_comando():
     try:
         orden_creada_dict = request.json
