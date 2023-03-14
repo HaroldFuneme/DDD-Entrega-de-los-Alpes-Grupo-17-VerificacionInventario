@@ -36,7 +36,7 @@ def suscribirse_a_eventos(app=None):
                     comando = AgregarOrdenCreada(event_id=dto.event_id, id_orden=dto.id_orden, usuario=dto.usuario,
                                                  direccion_usuario=dto.direccion_usuario, items=dto.items)
                     ## Invocar ejecutar_commando(comando)
-                    ejecutar_commando(comando)
+                    ejecutar_commando(comando, app=app)
             except:
                 logging.error('ERROR: Procesando evento de orden creada!')
                 traceback.print_exc()

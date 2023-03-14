@@ -13,7 +13,6 @@ from verifica_inventario.modulos.dominio.repositorios import RepositorioOrdenesC
 from verifica_inventario.modulos.infraestructura.fabricas import FabricaRepositorio
 from verifica_inventario.seedwork.aplicacion.comandos import Comando
 from verifica_inventario.seedwork.aplicacion.comandos import ejecutar_commando as comando
-from verifica_inventario.seedwork.infraestructura.uow import UnidadTrabajoVerificaInventario
 
 
 @dataclass
@@ -36,11 +35,11 @@ class AgregarOrdenCreada(Comando):
             return
 
         orden_creada_dto = OrdenCreadaDTO(
-            event_id=comando.event_id
-            , id_orden=comando.id_orden
-            , usuario=comando.usuario
-            , direccion_usuario=comando.direccion_usuario
-            , items=comando.items)
+            event_id=self.event_id
+            , id_orden=self.id_orden
+            , usuario=self.usuario
+            , direccion_usuario=self.direccion_usuario
+            , items=self.items)
 
         # Crea objeto de dominio a partir de objeto de capa de aplicación
         fabrica_verificacion_inventario = FabricaVerificacionInventario()
@@ -54,8 +53,9 @@ class AgregarOrdenCreada(Comando):
         fabrica_repositorio = FabricaRepositorio()
         repositorio = fabrica_repositorio.crear_objeto(RepositorioOrdenesCreadas)
 
-        UnidadTrabajoVerificaInventario.registrar_batch(repositorio.agregar, orden)
-        UnidadTrabajoVerificaInventario.commit()
+        repositorio.agregar(orden)
+
+        db.session.commit()
 
 
 def obtener_productos():
@@ -87,7 +87,7 @@ def obtener_inventario():
 class AgregarOrdenCreadaHandler(VerificaInventarioBaseHandler):
 
     def handle(self, comando: AgregarOrdenCreada):
-        from verifica_inventario.config import db
+        from verifica_inventario.config.db import db
 
         comando.ejecutar(db=db)
 
