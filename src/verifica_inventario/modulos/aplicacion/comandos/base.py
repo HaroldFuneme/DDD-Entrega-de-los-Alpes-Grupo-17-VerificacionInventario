@@ -10,7 +10,7 @@ class VerificaInventarioBaseHandler(ComandoHandler):
         self._fabrica_verificacion_inventario: FabricaVerificacionInventario = FabricaVerificacionInventario()
 
     def handle(self, comando: Comando):
-        pass
+        ...
 
     @property
     def fabrica_repositorio(self):

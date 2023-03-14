@@ -9,6 +9,10 @@ class Comando:
     def inicializa_estado_comando(self, dto: DTO):
         raise NotImplementedError()
 
+    @abstractmethod
+    def ejecutar(self):
+        ...
+
 
 class ComandoHandler(ABC):
     @abstractmethod
