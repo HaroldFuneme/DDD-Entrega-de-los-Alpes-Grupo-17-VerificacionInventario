@@ -134,3 +134,4 @@ dmypy.json
 /.idea/vcs.xml
 /data/
 /.idea/dataSources.xml
+/.idea/sqldialects.xml

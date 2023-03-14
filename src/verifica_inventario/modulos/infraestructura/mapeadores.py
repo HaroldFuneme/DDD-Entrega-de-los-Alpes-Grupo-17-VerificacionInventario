@@ -25,6 +25,8 @@ class MapeadorOrdenCreada(Mapeador):
         for item in entidad.items:
             items_dto.append(self._mapear_item_a_dto(item))
 
+        orden_creada_dto.items = items_dto
+
         return orden_creada_dto
 
     def dto_a_entidad(self, dto: OrdenCreadaDTO) -> Orden:
@@ -41,7 +43,7 @@ class MapeadorOrdenCreada(Mapeador):
 
     def _mapear_item_a_dto(self, item) -> ItemDTO:
         item_dto = ItemDTO()
-        item_dto.id = uuid.UUID
+        item_dto.id = str(uuid.uuid4())
         item_dto.descripcion = item.descripcion
         return item_dto
 

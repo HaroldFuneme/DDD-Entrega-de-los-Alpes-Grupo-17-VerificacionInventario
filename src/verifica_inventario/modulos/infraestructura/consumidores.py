@@ -29,10 +29,18 @@ def suscribirse_a_eventos(app=None):
             # TODO Identificar el tipo de CRUD del evento: Creacion, actualización o eliminación.
             ## Mapear json a DTO de aplicación.
             dto = MapeadorEventoOrdenCreadaDTOJson().externo_a_dto(mensaje.value())
-            ## Crear instancia de comando para procesar evento, AgregarOrdenCreada. Recibe DTO cómo parámetro
-            comando = AgregarOrdenCreada(event_id=dto.event_id, id_orden=dto.id_orden, usuario=dto.usuario, direccion_usuario=dto.direccion_usuario, items=dto.items)
-            ## Invocar ejecutar_commando(comando)
-            ejecutar_commando(comando)
+
+            try:
+                with app.app_context():
+                    ## Crear instancia de comando para procesar evento, AgregarOrdenCreada. Recibe DTO cómo parámetro
+                    comando = AgregarOrdenCreada(event_id=dto.event_id, id_orden=dto.id_orden, usuario=dto.usuario,
+                                                 direccion_usuario=dto.direccion_usuario, items=dto.items)
+                    ## Invocar ejecutar_commando(comando)
+                    ejecutar_commando(comando, app=app)
+            except:
+                logging.error('ERROR: Procesando evento de orden creada!')
+                traceback.print_exc()
+
             consumidor.acknowledge(mensaje)
 
         cliente.close()
