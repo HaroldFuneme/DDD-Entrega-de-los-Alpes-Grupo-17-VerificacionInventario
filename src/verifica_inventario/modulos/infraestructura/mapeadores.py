@@ -1,9 +1,10 @@
 import uuid
 
-from verifica_inventario.modulos.dominio.entidades import Orden
+from verifica_inventario.modulos.dominio.entidades import Orden, UbicacionItem, Bodega, CentroDistribucion
 from verifica_inventario.seedwork.dominio.repositorios import Mapeador
-from .dto import Item as ItemDTO
+from .dto import Item as ItemDTO, TipoAlmacenamiento
 from .dto import OrdenCreada as OrdenCreadaDTO
+from .dto import UbicacionItem as UbicacionItemDTO
 from .excepciones import NoExisteImplementacionParaTipoFabricaExcepcion
 from ..dominio.eventos import EventoVerificaInventario, OrdenRegistrada
 from ..dominio.objetos_valor import Item
@@ -34,10 +35,28 @@ class MapeadorOrdenCreada(Mapeador):
         orden_creada.items = list()
 
         items_dto: list[ItemDTO] = dto.items
+        ubicacion_items_dto: list[UbicacionItemDTO] = dto.ubicacion_items
 
         for item in items_dto:
-            item_entidad: Item(descripcion=item)
+            item_entidad = Item(descripcion=item.descripcion)
             orden_creada.items.append(item_entidad)
+
+        for ubicacion_item_dto in ubicacion_items_dto:
+            if ubicacion_item_dto.bodega and ubicacion_item_dto.bodega.tipo == TipoAlmacenamiento.BODEGA:
+                ubicacion_item = UbicacionItem(item=Item(ubicacion_item_dto.item_id),
+                                               bodega=Bodega(id_bodega=ubicacion_item_dto.bodega_id,
+                                                             nombre_bodega=ubicacion_item_dto.bodega.nombre_bodega,
+                                                             direccion=ubicacion_item_dto.bodega.direccion))
+            elif ubicacion_item_dto.bodega and ubicacion_item_dto.bodega.tipo == TipoAlmacenamiento.CENTRO_DISTRIBUCION:
+                ubicacion_item = UbicacionItem(item=Item(ubicacion_item_dto.item_id),
+                                               bodega=CentroDistribucion(id_bodega=ubicacion_item_dto.bodega_id,
+                                                                         nombre_centro_distribucion=ubicacion_item_dto.bodega.nombre_bodega,
+                                                                         direccion=ubicacion_item_dto.bodega.direccion))
+            else:
+                ubicacion_item = UbicacionItem(item=Item(ubicacion_item_dto.item_id),
+                                               bodega=None)
+
+            orden_creada.ubicacion_items.append(ubicacion_item)
 
         return orden_creada
 

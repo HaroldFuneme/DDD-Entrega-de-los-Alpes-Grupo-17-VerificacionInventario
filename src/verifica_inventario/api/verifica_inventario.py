@@ -17,8 +17,7 @@ def reservar_usando_comando():
     try:
         orden_creada_dict = request.json
 
-        map_orden_creada = MapeadorOrdenCreadaDTOJson()
-        orden_creada_dto = map_orden_creada.externo_a_dto(orden_creada_dict)
+        orden_creada_dto = MapeadorOrdenCreadaDTOJson().externo_a_dto(orden_creada_dict)
 
         orden_creada = OrdenCreada(ordenId=orden_creada_dto.id_orden, user=orden_creada_dto.usuario,
                                    user_address=orden_creada_dto.direccion_usuario, items=orden_creada_dto.items)

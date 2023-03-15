@@ -33,12 +33,18 @@ class EventoOrdenCreada(EventoIntegracion):
         super().__init__(*args, **kwargs)
 
 
+class Ubicacion(Record):
+    item = String()
+    address_bodega = String()
+
+
 class InventarioVerificadoPayload(Record):
     ordenId = String()
     user = String()
     user_address = String()
-    items_bodegas = Array(String())
-    items_centros = Array(String())
+    items_bodegas = Array(Ubicacion())
+    items_centros = Array(Ubicacion())
+    items_pendientes = Array(Ubicacion())
 
 
 class InventarioVerificado(EventoIntegracion):

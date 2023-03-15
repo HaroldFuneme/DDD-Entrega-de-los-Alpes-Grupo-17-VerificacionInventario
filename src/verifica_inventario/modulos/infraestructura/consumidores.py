@@ -8,9 +8,11 @@ from pulsar.schema import AvroSchema
 
 from verifica_inventario.modulos.aplicacion.comandos.agregar_orden_creada import AgregarOrdenCreada
 from verifica_inventario.modulos.aplicacion.mapeadores import MapeadorEventoOrdenCreadaDTOJson
+from verifica_inventario.modulos.infraestructura.proyecciones import ProyeccionVerificaInventarioOrden
 from verifica_inventario.modulos.infraestructura.schema.v1.comandos import ComandoVerificarInventarioOrden
 from verifica_inventario.modulos.infraestructura.schema.v1.eventos import EventoOrdenCreada
 from verifica_inventario.seedwork.aplicacion.comandos import ejecutar_commando
+from verifica_inventario.seedwork.infraestructura.proyecciones import ejecutar_proyeccion
 from verifica_inventario.seedwork.infraestructura import utils
 
 
@@ -37,6 +39,7 @@ def suscribirse_a_eventos(app=None):
                                                  direccion_usuario=dto.direccion_usuario, items=dto.items)
                     ## Invocar ejecutar_commando(comando)
                     ejecutar_commando(comando, app=app)
+                    ejecutar_proyeccion(ProyeccionVerificaInventarioOrden(dto), app=app)
             except:
                 logging.error('ERROR: Procesando evento de orden creada!')
                 traceback.print_exc()

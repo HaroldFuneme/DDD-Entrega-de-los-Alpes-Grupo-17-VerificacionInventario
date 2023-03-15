@@ -1,13 +1,8 @@
-from functools import singledispatch
 from abc import ABC, abstractmethod
-
-from verifica_inventario.seedwork.aplicacion.dto import DTO
+from functools import singledispatch
 
 
 class Comando:
-    @abstractmethod
-    def inicializa_estado_comando(self, dto: DTO):
-        raise NotImplementedError()
 
     @abstractmethod
     def ejecutar(self):

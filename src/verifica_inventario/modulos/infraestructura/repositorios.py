@@ -5,7 +5,8 @@ from pulsar.schema import JsonSchema
 from verifica_inventario.config.db import db
 from verifica_inventario.modulos.dominio.entidades import Orden
 from verifica_inventario.modulos.dominio.fabricas import FabricaVerificacionInventario
-from verifica_inventario.modulos.dominio.repositorios import RepositorioOrdenesCreadas, RepositorioEventosOrdenesVerificadas
+from verifica_inventario.modulos.dominio.repositorios import RepositorioOrdenesCreadas, \
+    RepositorioEventosOrdenesVerificadas
 from verifica_inventario.modulos.infraestructura.dto import EventosOrden
 from verifica_inventario.modulos.infraestructura.mapeadores import MapeadorOrdenCreada, MapeadorEventosOrdenCreada
 from .dto import OrdenCreada as OrdenCreadaDTO
@@ -21,7 +22,11 @@ class RepositorioOrdenesCreadasSQLAlchemy(RepositorioOrdenesCreadas):
         return self._fabrica_verificacion_inventario
 
     def obtener_por_id(self, id: UUID) -> Orden:
-        orden_dto = db.session.query(OrdenCreadaDTO).filter_by(id=str(id)).one()
+        orden_dto = db.session.query(OrdenCreadaDTO).filter_by(id_orden=str(id)).one()
+        return self._fabrica_verificacion_inventario.crear_objeto(orden_dto, MapeadorOrdenCreada())
+
+    def obtener_por_id(self, id: str) -> Orden:
+        orden_dto = db.session.query(OrdenCreadaDTO).filter_by(id_orden=id).one()
         return self._fabrica_verificacion_inventario.crear_objeto(orden_dto, MapeadorOrdenCreada())
 
     def obtener_todos(self) -> list[Orden]:

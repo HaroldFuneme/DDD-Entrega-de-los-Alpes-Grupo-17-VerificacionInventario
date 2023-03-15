@@ -21,3 +21,4 @@ class OrdenVerificada(EventoVerificaInventario):
     direccion_usuario: str = None
     items_bodegas: list() = None
     items_centros: list() = None
+    items_pendientes: list() = None

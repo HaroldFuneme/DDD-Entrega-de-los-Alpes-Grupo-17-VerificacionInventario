@@ -9,6 +9,10 @@ class Repositorio(ABC):
         ...
 
     @abstractmethod
+    def obtener_por_id(self, id: str) -> Entidad:
+        ...
+
+    @abstractmethod
     def obtener_todos(self) -> list[Entidad]:
         ...
 

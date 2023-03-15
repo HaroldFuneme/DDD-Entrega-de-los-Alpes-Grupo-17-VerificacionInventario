@@ -21,6 +21,7 @@ class MapeadorOrdenCreadaDTOJson(AppMap):
     def dto_a_externo(self, dto: OrdenCreadaDTO) -> any:
         return dto.__dict__
 
+
 class MapeadorEventoOrdenCreadaDTOJson(AppMap):
 
     def externo_a_dto(self, evento: any) -> OrdenCreadaDTO:
@@ -42,15 +43,16 @@ class MapeadorOrdenCreada(Mapeador):
         return Orden.__class__
 
     def entidad_a_dto(self, entidad: Orden) -> OrdenCreadaDTO:
-        _id_orden = str(entidad.id_orden)
+        id_orden = str(entidad.id_orden)
         usuario = entidad.usuario
         direccion_usuario = entidad.direccion_usuario
         items = entidad.items
 
-        return OrdenCreadaDTO(id_orden=_id_orden, usuario=usuario, direccion_usuario=direccion_usuario, items=items)
+        return OrdenCreadaDTO(id_orden=id_orden, usuario=usuario, direccion_usuario=direccion_usuario, items=items)
 
     def dto_a_entidad(self, dto: OrdenCreadaDTO) -> Orden:
-        orden_creada = Orden(id=dto.event_id,id_orden=dto.id_orden, usuario=dto.usuario, direccion_usuario=dto.direccion_usuario)
+        orden_creada = Orden(id=dto.event_id, id_orden=dto.id_orden, usuario=dto.usuario,
+                             direccion_usuario=dto.direccion_usuario)
         orden_creada.items = list()
 
         items_dto: list[ItemDTO] = dto.items

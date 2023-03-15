@@ -82,12 +82,6 @@ class Item(ObjetoValor):
 
 
 @dataclass(frozen=True)
-class UbicacionItem(ObjetoValor):
-    item: str
-    direccion: Direccion
-
-
-@dataclass(frozen=True)
 class Usuario(ObjetoValor):
     nombre: str
 

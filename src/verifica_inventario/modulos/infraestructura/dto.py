@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Enum
+from typing import List
 
 from verifica_inventario.config.db import db
 
@@ -10,13 +10,6 @@ ordenes_creadas_items = db.Table(
     db.Column("item_id", db.String(40), db.ForeignKey("items.id")),
 )
 
-inventario_bodega = db.Table(
-    "inventario_bodega",
-    db.Model.metadata,
-    db.Column("bodega_id", db.String(40), db.ForeignKey("bodegas.id"), primary_key=True),
-    db.Column("item_id", db.String(40), primary_key=True),
-)
-
 
 class OrdenCreada(db.Model):
     __tablename__ = "ordenes_creadas"
@@ -24,6 +17,7 @@ class OrdenCreada(db.Model):
     usuario = db.Column(db.String(30), nullable=True)
     direccion_usuario = db.Column(db.String(100), nullable=True)
     items = db.relationship('Item', secondary=ordenes_creadas_items, backref='ordenes_creadas')
+    ubicacion_items = db.relationship("UbicacionItem", back_populates="orden")
 
 
 class Item(db.Model):
@@ -44,6 +38,21 @@ class Bodega(db.Model):
     direccion = db.Column(db.String(100), nullable=False)
     ciudad = db.Column(db.String(30), nullable=False)
     tipo = db.Column(db.Enum(TipoAlmacenamiento), nullable=False)
+
+
+class InventarioBodega(db.Model):
+    __tablename__ = "inventario_bodega"
+    bodega_id = db.Column(db.String(40), db.ForeignKey("bodegas.id"), primary_key=True)
+    item_id = db.Column(db.String(40), primary_key=True)
+    cantidad_disponible = db.Column(db.Integer, nullable=False)
+
+
+class UbicacionItem(db.Model):
+    item_id = db.Column(db.String(40), primary_key=True)
+    orden_id = db.Column(db.String(40), db.ForeignKey("ordenes_creadas.id_orden"), nullable=False)
+    bodega_id = db.Column(db.String(40), db.ForeignKey("bodegas.id"), nullable=True)
+    bodega = db.relationship("Bodega")
+    orden = db.relationship("OrdenCreada", back_populates="ubicacion_items")
 
 
 class EventosOrden(db.Model):
