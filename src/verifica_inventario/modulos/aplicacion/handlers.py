@@ -1,6 +1,8 @@
+import os
+
 from verifica_inventario.modulos.infraestructura.despachadores import Despachador
 from verifica_inventario.modulos.infraestructura.schema.v1.eventos import InventarioVerificado, \
-    InventarioVerificadoPayload, Ubicacion
+    InventarioVerificadoPayload, Ubicacion, InventarioVerificadoCompensacion
 from verifica_inventario.seedwork.aplicacion.handlers import Handler
 
 
@@ -19,10 +21,17 @@ class HandlerVerificaInventarioIntegracion(Handler):
                                                        items_centros=items_centros,
                                                        items_pendientes=items_pendientes)
 
-        inventario_verificado = InventarioVerificado(eventId=str(evento.id), payload=orden_verificada)
-
-        despachador = Despachador()
-        despachador.publicar_mensaje(inventario_verificado, 'eventos-inventario-verificado')
+        if evento.__class__ == InventarioVerificado:
+            inventario_verificado = InventarioVerificado(eventId=str(evento.id), payload=orden_verificada)
+            topico_eventos_despacho_orden = os.getenv('TOPICO_EVENTOS_DESPACHO_ORDEN', default="verifica-inventario")
+            despachador = Despachador()
+            despachador.publicar_mensaje(inventario_verificado, topico_eventos_despacho_orden)
+        elif evento.__class__ == InventarioVerificadoCompensacion:
+            inventario_verificado = InventarioVerificado(eventId=str(evento.id), payload=orden_verificada)
+            topico_eventos_despacho_orden = os.getenv('TOPICO_EVENTOS_DESPACHO_ORDEN_COMPENSACION',
+                                                      default="verifica-inventario-compensacion")
+            despachador = Despachador()
+            despachador.publicar_mensaje(inventario_verificado, topico_eventos_despacho_orden)
 
     @staticmethod
     def mapear_items_a_record(items):

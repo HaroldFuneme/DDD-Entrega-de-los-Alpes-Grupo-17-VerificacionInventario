@@ -9,7 +9,6 @@ from verifica_inventario.modulos.dominio.entidades import Orden
 from verifica_inventario.modulos.dominio.repositorios import RepositorioOrdenesCreadas
 from verifica_inventario.modulos.infraestructura.dto import InventarioBodega, Bodega, UbicacionItem, OrdenCreada
 from verifica_inventario.modulos.infraestructura.fabricas import FabricaRepositorio
-from verifica_inventario.modulos.infraestructura.mapeadores import MapeadorOrdenCreada
 from verifica_inventario.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
 from verifica_inventario.seedwork.infraestructura.proyecciones import ejecutar_proyeccion as proyeccion
 
