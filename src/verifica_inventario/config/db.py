@@ -5,9 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = None
 
-DB_USERNAME = os.getenv('DB_USERNAME', default="root")
-DB_PASSWORD = os.getenv('DB_PASSWORD', default="adminadmin")
-DB_HOSTNAME = os.getenv('DB_HOSTNAME', default="localhost")
+DB_USERNAME = os.getenv('DB_USERNAME', default="ordenes_despacho")
+DB_PASSWORD = os.getenv('DB_PASSWORD', default="ordenes_despacho")
+DB_HOSTNAME = os.getenv('DB_HOSTNAME', default="34.121.25.38")
 
 
 class DatabaseConfigException(Exception):
