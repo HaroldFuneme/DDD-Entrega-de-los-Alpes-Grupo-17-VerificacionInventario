@@ -1,5 +1,4 @@
 import enum
-from typing import List
 
 from verifica_inventario.config.db import db
 
@@ -16,8 +15,9 @@ class OrdenCreada(db.Model):
     id_orden = db.Column(db.String(40), primary_key=True)
     usuario = db.Column(db.String(30), nullable=True)
     direccion_usuario = db.Column(db.String(100), nullable=True)
-    items = db.relationship('Item', secondary=ordenes_creadas_items, backref='ordenes_creadas')
-    ubicacion_items = db.relationship("UbicacionItem", back_populates="orden")
+    items = db.relationship('Item', secondary=ordenes_creadas_items, backref='ordenes_creadas',
+                            cascade="all,delete")
+    ubicacion_items = db.relationship("UbicacionItem", back_populates="orden", cascade="all,delete")
 
 
 class Item(db.Model):

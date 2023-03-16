@@ -6,7 +6,6 @@ from pydispatch import dispatcher
 
 from verifica_inventario.modulos.aplicacion.handlers import HandlerVerificaInventarioIntegracion
 from verifica_inventario.modulos.dominio.eventos import OrdenVerificada
-from verifica_inventario.modulos.infraestructura.schema.v1.eventos import InventarioVerificado
 
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -15,10 +14,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def registrar_handlers():
     dispatcher.connect(HandlerVerificaInventarioIntegracion.handle_inventario_verificado,
                        signal=f'{OrdenVerificada.__name__}Integracion')
+    dispatcher.connect(HandlerVerificaInventarioIntegracion.handle_inventario_verificado,
+                       signal=f'{OrdenVerificada.__name__}Compensacion')
 
 
 def importar_modelos_alchemy():
-    import verifica_inventario.modulos.infraestructura.dto
+    pass
 
 
 def comenzar_consumidor(app):
